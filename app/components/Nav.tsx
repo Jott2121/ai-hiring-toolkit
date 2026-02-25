@@ -8,6 +8,7 @@ const links = [
   { href: "/jd-builder", label: "JD Builder" },
   { href: "/interview-kit", label: "Interview Kit" },
   { href: "/sourcing", label: "Sourcing" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Nav() {

@@ -13,14 +13,9 @@ import {
   Shield,
   Zap,
   Clock,
-  Users,
-  Star,
   ChevronRight,
   Sparkles,
   Target,
-  BarChart3,
-  Globe,
-  Monitor,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -120,7 +115,7 @@ const steps = [
     number: "01",
     title: "Paste your job description",
     description:
-      "Drop in rough notes or a polished JD. Our AI understands both and extracts what matters.",
+      "Drop in rough notes, a formal JD, or even bullet points from a hiring manager\u2019s Slack message. The AI figures out what matters.",
     icon: FileText,
   },
   {
@@ -134,32 +129,8 @@ const steps = [
     number: "03",
     title: "Hire with confidence",
     description:
-      "Get structured, bias-aware evaluations and compliance-ready documentation in minutes.",
+      "Get structured evaluations with clear reasoning \u2014 no black-box scores. Every recommendation explains why.",
     icon: Check,
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "Cut our screening time from 3 hours to 20 minutes. The resume scorer alone paid for itself in the first week.",
-    author: "Sarah K.",
-    role: "Head of Talent, Series A Startup",
-    rating: 5,
-  },
-  {
-    quote:
-      "The sourcing assistant generates better Boolean strings than recruiters with 10 years of experience. Game changer.",
-    author: "Marcus L.",
-    role: "Technical Recruiter",
-    rating: 5,
-  },
-  {
-    quote:
-      "Finally an AI tool that takes compliance seriously. The disclaimers and consent gates give me confidence to recommend it.",
-    author: "Priya R.",
-    role: "HR Director, Mid-Market SaaS",
-    rating: 5,
   },
 ];
 
@@ -173,6 +144,7 @@ interface PricingPlan {
   href: string;
   highlighted?: boolean;
   badge?: string;
+  subtitle?: string;
 }
 
 const pricingPlans: PricingPlan[] = [
@@ -205,10 +177,11 @@ const pricingPlans: PricingPlan[] = [
       "Profile fit analyzer",
       "Priority support",
     ],
-    cta: "Start Pro Trial",
+    cta: "Join Pro Waitlist",
     href: "/resume-scorer",
     highlighted: true,
-    badge: "Most Popular",
+    badge: "Early Access",
+    subtitle: "Lock in this price \u2014 it\u2019s going up after beta.",
   },
   {
     name: "Team",
@@ -224,35 +197,9 @@ const pricingPlans: PricingPlan[] = [
       "SSO & audit log",
       "Dedicated support",
     ],
-    cta: "Contact Sales",
+    cta: "Request Early Access",
     href: "/resume-scorer",
-  },
-];
-
-const productVisuals = [
-  {
-    title: "Resume Ranking Dashboard",
-    description:
-      "See candidates ranked by fit score with detailed breakdowns of strengths, risks, and interview focus areas.",
-    icon: BarChart3,
-    gradient: "from-emerald-500/10 via-emerald-500/5 to-transparent",
-    accent: "bg-emerald-500",
-  },
-  {
-    title: "Boolean Search Output",
-    description:
-      "AI-generated search strings ready for LinkedIn, GitHub, and more — with broad, targeted, and narrow variants.",
-    icon: Globe,
-    gradient: "from-blue-500/10 via-blue-500/5 to-transparent",
-    accent: "bg-blue-500",
-  },
-  {
-    title: "Interview Kit Builder",
-    description:
-      "Structured behavioral and technical questions, scorecards, and interviewer prep notes in one view.",
-    icon: Monitor,
-    gradient: "from-violet-500/10 via-violet-500/5 to-transparent",
-    accent: "bg-violet-500",
+    subtitle: "Coming Q2 2026",
   },
 ];
 
@@ -301,12 +248,12 @@ export default function Home() {
             {/* Headline */}
             <motion.h1
               variants={fadeUp}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.75rem] font-bold tracking-tight leading-[1.06] text-foreground"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-bold tracking-tight leading-[1.1] text-foreground"
             >
-              Build Better Teams
+              Stop Spending Friday Nights
               <br />
               <span className="bg-gradient-to-r from-blue-600 via-blue-500 to-sky-400 bg-clip-text text-transparent">
-                Faster
+                Ranking 47 Resumes in a Spreadsheet
               </span>
             </motion.h1>
 
@@ -315,10 +262,11 @@ export default function Home() {
               variants={fadeUp}
               className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             >
-              The complete AI hiring toolkit for small teams. Build JDs &rarr;
-              Source legally &rarr; Screen &amp; rank &rarr; Interview ready.{" "}
+              The AI hiring toolkit built for small teams who don&apos;t have a
+              recruiting department. Go from rough job notes to ranked candidates
+              with interview-ready scorecards &mdash;{" "}
               <span className="font-semibold text-foreground">
-                Save 15+ hours per hire.
+                in minutes, not days.
               </span>
             </motion.p>
 
@@ -333,7 +281,7 @@ export default function Home() {
                 asChild
               >
                 <Link href="/resume-scorer">
-                  Get Started Free
+                  Try Resume Scorer Free
                   <ArrowRight className="size-4 ml-1" />
                 </Link>
               </Button>
@@ -343,8 +291,8 @@ export default function Home() {
                 className="h-12 px-8 text-base rounded-xl hover:bg-blue-50/50"
                 asChild
               >
-                <Link href="/sourcing">
-                  Start Sourcing Now
+                <Link href="#how-it-works">
+                  See How It Works
                   <ChevronRight className="size-4 ml-1" />
                 </Link>
               </Button>
@@ -356,9 +304,9 @@ export default function Home() {
               className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground"
             >
               {[
-                "No credit card",
+                "Built by a recruiter",
+                "No credit card required",
                 "Fully compliant",
-                "Used by recruiters at 50+ startups",
               ].map((text) => (
                 <span key={text} className="flex items-center gap-2">
                   <Check className="size-4 text-emerald-500" />
@@ -383,20 +331,20 @@ export default function Home() {
             variants={fadeUp}
             className="text-sm font-semibold text-primary uppercase tracking-wider mb-3"
           >
-            Everything you need
+            The toolkit
           </motion.p>
           <motion.h2
             variants={fadeUp}
             className="text-3xl sm:text-4xl font-bold text-foreground"
           >
-            Everything you need in one elegant toolkit
+            Four tools. One workflow. Zero busywork.
           </motion.h2>
           <motion.p
             variants={fadeUp}
             className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            From job description to offer letter &mdash; four AI tools designed
-            for recruiters who move fast.
+            Each tool handles a different stage of hiring &mdash; use one at a
+            time or chain them together for a full pipeline.
           </motion.p>
         </motion.div>
 
@@ -464,70 +412,55 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ─── Product Visuals ──────────────────────────── */}
-      <section className="border-y border-border/50 bg-slate-50/60">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={stagger}
-            className="text-center mb-16"
-          >
-            <motion.p
-              variants={fadeUp}
-              className="text-sm font-semibold text-primary uppercase tracking-wider mb-3"
-            >
-              See it in action
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              className="text-3xl sm:text-4xl font-bold text-foreground"
-            >
-              See MeritForgeAI in action
-            </motion.h2>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={stagger}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            {productVisuals.map((visual) => {
-              const Icon = visual.icon;
-              return (
-                <motion.div key={visual.title} variants={fadeUp}>
-                  <Card className="overflow-hidden p-0 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                      className={`relative h-52 bg-gradient-to-br ${visual.gradient} flex items-center justify-center border-b border-border/30`}
-                    >
-                      <div className="size-16 rounded-2xl bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center border border-border/30">
-                        <Icon className="size-8 text-slate-500" />
-                      </div>
-                      <div
-                        className={`absolute top-4 right-4 size-2 rounded-full ${visual.accent}`}
-                      />
-                    </div>
-                    <CardContent className="p-5">
-                      <h3 className="font-semibold text-foreground text-sm">
-                        {visual.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-                        {visual.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+      {/* ─── See It In Action ──────────────────────────── */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <p className="text-sm font-semibold tracking-wider text-primary uppercase mb-4 text-center">See it in action</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What you&apos;ll actually get</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="rounded-xl border bg-card p-6 space-y-4">
+              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                <div className="text-center">
+                  <p className="text-4xl mb-2">📊</p>
+                  <p className="text-sm">Resume Ranking Dashboard</p>
+                </div>
+              </div>
+              <h3 className="font-semibold text-lg">Candidates ranked by fit score</h3>
+              <p className="text-sm text-muted-foreground">Upload resumes, paste a JD, and get instant fit scores with strengths, risks, and suggested interview questions for each candidate.</p>
+              <Link href="/resume-scorer" className="text-primary text-sm font-medium hover:underline inline-block">Try it free →</Link>
+            </div>
+            {/* Card 2 */}
+            <div className="rounded-xl border bg-card p-6 space-y-4">
+              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                <div className="text-center">
+                  <p className="text-4xl mb-2">🔍</p>
+                  <p className="text-sm">Boolean Search Output</p>
+                </div>
+              </div>
+              <h3 className="font-semibold text-lg">AI-generated search strings</h3>
+              <p className="text-sm text-muted-foreground">Get broad, targeted, and narrow Boolean strings ready for LinkedIn, GitHub, and Stack Overflow &mdash; plus personalized outreach templates.</p>
+              <Link href="/sourcing" className="text-primary text-sm font-medium hover:underline inline-block">Try sourcing →</Link>
+            </div>
+            {/* Card 3 */}
+            <div className="rounded-xl border bg-card p-6 space-y-4">
+              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
+                <div className="text-center">
+                  <p className="text-4xl mb-2">📋</p>
+                  <p className="text-sm">Interview Kit Builder</p>
+                </div>
+              </div>
+              <h3 className="font-semibold text-lg">Structured interview prep</h3>
+              <p className="text-sm text-muted-foreground">Behavioral and technical questions, evaluation scorecards, and interviewer prep notes &mdash; customized to the role and candidate.</p>
+              <Link href="/interview-kit" className="text-primary text-sm font-medium hover:underline inline-block">Build a kit →</Link>
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-8">📸 Live product screenshots coming soon &mdash; the tools are fully functional now.</p>
         </div>
       </section>
 
       {/* ─── How It Works ─────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <section id="how-it-works" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -600,7 +533,7 @@ export default function Home() {
           >
             {[
               { icon: Clock, value: "15+ hrs", label: "Saved per hire" },
-              { icon: Users, value: "50+", label: "Startup teams" },
+              { icon: Target, value: "4 tools", label: "1 workflow" },
               { icon: Zap, value: "<30s", label: "Average analysis" },
               {
                 icon: Shield,
@@ -735,6 +668,11 @@ export default function Home() {
                     <p className="mt-2 text-sm text-muted-foreground">
                       {plan.description}
                     </p>
+                    {plan.subtitle && (
+                      <p className="mt-2 text-xs font-medium text-primary">
+                        {plan.subtitle}
+                      </p>
+                    )}
                   </div>
 
                   <Separator className="mb-6" />
@@ -792,64 +730,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Testimonials ─────────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeUp}
-            className="text-sm font-semibold text-primary uppercase tracking-wider mb-3"
-          >
-            Loved by recruiters
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
-            className="text-3xl sm:text-4xl font-bold text-foreground"
-          >
-            What our users say
-          </motion.h2>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          variants={stagger}
-          className="grid md:grid-cols-3 gap-6"
-        >
-          {testimonials.map((t) => (
-            <motion.div key={t.author} variants={fadeUp}>
-              <Card className="h-full p-0 shadow-sm hover:shadow-md transition-shadow">
-                <CardContent className="p-7 flex flex-col h-full">
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className="size-4 fill-amber-400 text-amber-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-foreground/90 leading-relaxed text-sm flex-1">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div className="mt-6 pt-5 border-t border-border/50">
-                    <p className="font-semibold text-foreground text-sm">
-                      {t.author}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {t.role}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+      {/* ─── Built by a Recruiter ──────────────────────── */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 max-w-4xl text-center">
+          <p className="text-sm font-semibold tracking-wider text-primary uppercase mb-4">Why MeritForge exists</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Built by a Recruiter Who Got Tired of the Busywork</h2>
+          <div className="text-lg text-muted-foreground space-y-4 text-left max-w-2xl mx-auto">
+            <p>
+              I&apos;m Jeff &mdash; a Talent Acquisition Manager who&apos;s screened thousands of candidates for roles at one of the largest defense contractors in the world.
+            </p>
+            <p>
+              I built MeritForge because I kept watching small teams drown in the same manual processes that big companies solve with $100K/year ATS platforms. Writing JDs from scratch. Copy-pasting Boolean strings from three-year-old blog posts. Printing resumes to rank them by hand.
+            </p>
+            <p>
+              Every tool in this kit solves a problem I&apos;ve personally hit &mdash; and it&apos;s designed for teams that need to hire well without a dedicated recruiting department.
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              <span>10+ years in talent acquisition</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              <span>MBA candidate, W.P. Carey School of Business</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              <span>Thousands of candidates screened</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ─── Final CTA ────────────────────────────────── */}
@@ -875,14 +786,14 @@ export default function Home() {
               variants={fadeUp}
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground"
             >
-              Ready to hire smarter?
+              Your next hire shouldn&apos;t take 40 hours of busywork
             </motion.h2>
             <motion.p
               variants={fadeUp}
               className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto"
             >
-              Join recruiters saving 15+ hours per hire with AI-powered
-              screening, sourcing, and interview prep.
+              Start with the free Resume Scorer &mdash; no account required, no
+              credit card, no sales call.
             </motion.p>
             <motion.div
               variants={fadeUp}
@@ -894,7 +805,7 @@ export default function Home() {
                 asChild
               >
                 <Link href="/resume-scorer">
-                  Get Started Free
+                  Score Your First Resume
                   <ArrowRight className="size-4 ml-1" />
                 </Link>
               </Button>
@@ -923,8 +834,8 @@ export default function Home() {
                 MeritForge
               </p>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                AI-powered hiring tools built for recruiters who move fast and
-                hire right.
+                AI hiring tools built by a recruiter, for teams without a
+                recruiting department.
               </p>
             </div>
             <div>
