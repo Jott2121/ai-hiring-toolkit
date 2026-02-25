@@ -7,6 +7,7 @@ const links = [
   { href: "/resume-scorer", label: "Resume Scorer" },
   { href: "/jd-builder", label: "JD Builder" },
   { href: "/interview-kit", label: "Interview Kit" },
+  { href: "/sourcing", label: "Sourcing" },
 ];
 
 export default function Nav() {

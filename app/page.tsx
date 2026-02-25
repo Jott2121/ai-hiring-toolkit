@@ -22,6 +22,13 @@ const features = [
     href: "/interview-kit",
     cta: "Create Interview Kit",
   },
+  {
+    title: "Sourcing Assistant",
+    description:
+      "Generate Boolean search strings, build sourcing strategies, craft personalized outreach messages, and analyze public profiles.",
+    href: "/sourcing",
+    cta: "Start Sourcing",
+  },
 ];
 
 export default function Home() {
@@ -50,7 +57,7 @@ export default function Home() {
       </div>
 
       {/* Features */}
-      <div className="grid md:grid-cols-3 gap-6 pb-16">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
         {features.map((feature) => (
           <Link
             key={feature.href}
