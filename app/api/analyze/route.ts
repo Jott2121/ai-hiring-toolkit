@@ -24,7 +24,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+      maxRetries: 3,
+    });
     const results = [];
 
     for (const resume of resumes) {
@@ -120,13 +123,16 @@ The evaluationRubric should have 4-5 criteria covering: technical skills, experi
           }
         }
       } catch (err) {
+        const rawMsg =
+          err instanceof Error ? err.message : "Failed to analyze this resume.";
+        const friendlyMsg =
+          rawMsg.includes("overloaded") || rawMsg.includes("529")
+            ? "The AI service is temporarily overloaded. Please wait a minute and try again."
+            : rawMsg;
         results.push({
           candidateName: resume.name.replace(/\.(pdf|docx?)$/i, ""),
           fitScore: 0,
-          error:
-            err instanceof Error
-              ? err.message
-              : "Failed to analyze this resume.",
+          error: friendlyMsg,
           strengths: [],
           risks: [],
           interviewFocus: [],
@@ -148,6 +154,15 @@ The evaluationRubric should have 4-5 criteria covering: technical skills, experi
             "Your Anthropic API account needs credits. Go to console.anthropic.com → Plans & Billing to add credits.",
         },
         { status: 402 }
+      );
+    }
+    if (message.includes("overloaded") || message.includes("529")) {
+      return Response.json(
+        {
+          error:
+            "The AI service is temporarily overloaded. Please wait a minute and try again.",
+        },
+        { status: 529 }
       );
     }
     return Response.json({ error: message }, { status: 500 });
