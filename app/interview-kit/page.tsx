@@ -79,7 +79,7 @@ export default function InterviewKit() {
         <h1 className="text-3xl font-bold text-foreground">
           Interview Kit Generator
         </h1>
-        <p className="mt-2 text-muted">
+        <p className="mt-2 text-muted-foreground">
           Generate behavioral questions, technical prompts, evaluation
           scorecards, and interviewer prep notes for any role.
         </p>
@@ -96,7 +96,7 @@ export default function InterviewKit() {
             value={roleTitle}
             onChange={(e) => setRoleTitle(e.target.value)}
             placeholder="e.g. Senior Software Engineer"
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
           />
         </div>
 
@@ -109,7 +109,7 @@ export default function InterviewKit() {
             onChange={(e) => setJobDescription(e.target.value)}
             placeholder="Paste the job description or key requirements..."
             rows={6}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
           />
         </div>
 
@@ -122,7 +122,7 @@ export default function InterviewKit() {
             onChange={(e) => setCandidateProfile(e.target.value)}
             placeholder="Paste candidate summary or resume highlights to tailor questions to a specific candidate..."
             rows={4}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
           />
         </div>
 
@@ -146,7 +146,7 @@ export default function InterviewKit() {
       {isLoading && (
         <div className="mt-8 text-center">
           <div className="inline-block w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="mt-3 text-muted">
+          <p className="mt-3 text-muted-foreground">
             Generating interview preparation materials...
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function InterviewKit() {
                 className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition-colors ${
                   activeTab === tab.key
                     ? "border-primary text-primary"
-                    : "border-transparent text-muted hover:text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {tab.label}
@@ -181,13 +181,13 @@ export default function InterviewKit() {
                       {i + 1}. {q.question}
                     </p>
                     <div className="mt-2 ml-4 space-y-1">
-                      <p className="text-sm text-muted">
+                      <p className="text-sm text-muted-foreground">
                         <span className="font-medium text-foreground/70">
                           Follow-up:
                         </span>{" "}
                         {q.followUp}
                       </p>
-                      <p className="text-sm text-muted">
+                      <p className="text-sm text-muted-foreground">
                         <span className="font-medium text-foreground/70">
                           Look for:
                         </span>{" "}
@@ -208,13 +208,13 @@ export default function InterviewKit() {
                       {i + 1}. {q.question}
                     </p>
                     <div className="mt-2 ml-4 space-y-1">
-                      <p className="text-sm text-muted">
+                      <p className="text-sm text-muted-foreground">
                         <span className="font-medium text-foreground/70">
                           Why this matters:
                         </span>{" "}
                         {q.context}
                       </p>
-                      <p className="text-sm text-muted">
+                      <p className="text-sm text-muted-foreground">
                         <span className="font-medium text-foreground/70">
                           Look for:
                         </span>{" "}
@@ -234,7 +234,7 @@ export default function InterviewKit() {
                     <h4 className="font-medium text-foreground">
                       {item.criteria}
                     </h4>
-                    <p className="text-sm text-muted mt-1">
+                    <p className="text-sm text-muted-foreground mt-1">
                       {item.description}
                     </p>
                     <div className="mt-3 grid grid-cols-5 gap-2">
@@ -246,7 +246,7 @@ export default function InterviewKit() {
                           <div className="font-semibold text-foreground">
                             {score}
                           </div>
-                          <div className="text-xs text-muted mt-0.5">
+                          <div className="text-xs text-muted-foreground mt-0.5">
                             {desc}
                           </div>
                         </div>

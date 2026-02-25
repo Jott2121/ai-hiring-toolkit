@@ -273,7 +273,7 @@ export default function SourcingAssistant() {
     loading ? (
       <div className="mt-8 text-center">
         <div className="inline-block w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-        <p className="mt-3 text-muted">{text}</p>
+        <p className="mt-3 text-muted-foreground">{text}</p>
       </div>
     ) : null;
 
@@ -286,7 +286,7 @@ export default function SourcingAssistant() {
           <h1 className="text-3xl font-bold text-foreground">
             Sourcing Assistant
           </h1>
-          <p className="mt-2 text-muted">
+          <p className="mt-2 text-muted-foreground">
             Generate Boolean searches, build sourcing strategies, craft outreach
             messages, and analyze public profiles — all legally compliant.
           </p>
@@ -303,7 +303,7 @@ export default function SourcingAssistant() {
               className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition-colors ${
                 activeTab === tab.key
                   ? "border-primary text-primary"
-                  : "border-transparent text-muted hover:text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
               {tab.label}
@@ -324,7 +324,7 @@ export default function SourcingAssistant() {
                   onChange={(e) => setBoolJd(e.target.value)}
                   placeholder="Paste the full job description here..."
                   rows={6}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
               </div>
 
@@ -338,7 +338,7 @@ export default function SourcingAssistant() {
                     value={boolLocation}
                     onChange={(e) => setBoolLocation(e.target.value)}
                     placeholder="e.g. San Francisco, Remote, EMEA"
-                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 <div>
@@ -384,7 +384,7 @@ export default function SourcingAssistant() {
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
                         boolDiversity.includes(flag)
                           ? "bg-primary text-white"
-                          : "bg-gray-100 text-muted hover:text-foreground"
+                          : "bg-gray-100 text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       {flag}
@@ -436,7 +436,7 @@ export default function SourcingAssistant() {
                       <pre className="bg-gray-50 border border-border rounded-lg p-3 text-sm text-foreground/90 whitespace-pre-wrap break-words font-mono">
                         {variant.query}
                       </pre>
-                      <p className="mt-2 text-xs text-muted">
+                      <p className="mt-2 text-xs text-muted-foreground">
                         {variant.bestFor}
                       </p>
                     </div>
@@ -448,7 +448,7 @@ export default function SourcingAssistant() {
                   <h3 className="font-semibold text-foreground mb-3">
                     Quick Search Links
                   </h3>
-                  <p className="text-xs text-muted mb-3">
+                  <p className="text-xs text-muted-foreground mb-3">
                     Opens the Targeted query on each platform. You can paste
                     other variants manually.
                   </p>
@@ -539,7 +539,7 @@ export default function SourcingAssistant() {
                   onChange={(e) => setStratJd(e.target.value)}
                   placeholder="Paste the full job description here..."
                   rows={6}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
               </div>
 
@@ -568,7 +568,7 @@ export default function SourcingAssistant() {
                     value={stratIndustry}
                     onChange={(e) => setStratIndustry(e.target.value)}
                     placeholder="e.g. FinTech, Healthcare, SaaS"
-                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
               </div>
@@ -597,19 +597,19 @@ export default function SourcingAssistant() {
                       <p className="text-2xl font-bold text-primary">
                         {stratResult.metrics.responseRateBenchmark}
                       </p>
-                      <p className="text-xs text-muted">Response Rate</p>
+                      <p className="text-xs text-muted-foreground">Response Rate</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-primary">
                         {stratResult.metrics.pipelineTarget}
                       </p>
-                      <p className="text-xs text-muted">Pipeline Target</p>
+                      <p className="text-xs text-muted-foreground">Pipeline Target</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-primary">
                         {stratResult.metrics.timeToFill}
                       </p>
-                      <p className="text-xs text-muted">Time to Fill</p>
+                      <p className="text-xs text-muted-foreground">Time to Fill</p>
                     </div>
                   </div>
                 </div>
@@ -629,7 +629,7 @@ export default function SourcingAssistant() {
                           <span className="font-medium text-foreground">
                             Days {phase.days}: {phase.theme}
                           </span>
-                          <span className="text-xs text-muted">
+                          <span className="text-xs text-muted-foreground">
                             {phase.targetVolume}/day
                           </span>
                         </div>
@@ -668,7 +668,7 @@ export default function SourcingAssistant() {
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-sm font-medium text-muted mb-2">
+                      <h4 className="text-sm font-medium text-muted-foreground mb-2">
                         Alternative Titles
                       </h4>
                       <div className="flex flex-wrap gap-1">
@@ -683,7 +683,7 @@ export default function SourcingAssistant() {
                       </div>
                     </div>
                     <div>
-                      <h4 className="text-sm font-medium text-muted mb-2">
+                      <h4 className="text-sm font-medium text-muted-foreground mb-2">
                         Related Skills
                       </h4>
                       <div className="flex flex-wrap gap-1">
@@ -789,7 +789,7 @@ export default function SourcingAssistant() {
                   onChange={(e) => setOutJd(e.target.value)}
                   placeholder="Paste the job description..."
                   rows={5}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
               </div>
 
@@ -802,9 +802,9 @@ export default function SourcingAssistant() {
                   onChange={(e) => setOutProfile(e.target.value)}
                   placeholder="Paste the candidate's public LinkedIn or GitHub profile text here..."
                   rows={6}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
-                <p className="text-xs text-muted mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Copy/paste public profile content only. Do not use scrapers or
                   automated tools.
                 </p>
@@ -835,14 +835,14 @@ export default function SourcingAssistant() {
                         <h3 className="font-semibold text-foreground">
                           {msg.channel}
                         </h3>
-                        <span className="px-2 py-0.5 bg-gray-100 text-muted rounded text-xs">
+                        <span className="px-2 py-0.5 bg-gray-100 text-muted-foreground rounded text-xs">
                           {msg.characterCount} chars
                         </span>
                       </div>
                       <CopyButton text={msg.body} />
                     </div>
                     {msg.subject && (
-                      <p className="text-sm text-muted mb-2">
+                      <p className="text-sm text-muted-foreground mb-2">
                         <span className="font-medium">Subject:</span>{" "}
                         {msg.subject}
                       </p>
@@ -850,7 +850,7 @@ export default function SourcingAssistant() {
                     <div className="bg-gray-50 border border-border rounded-lg p-4 text-sm text-foreground/90 whitespace-pre-wrap">
                       {msg.body}
                     </div>
-                    <p className="mt-2 text-xs text-muted">
+                    <p className="mt-2 text-xs text-muted-foreground">
                       <span className="font-medium">A/B Test:</span>{" "}
                       {msg.abTestNote}
                     </p>
@@ -930,7 +930,7 @@ export default function SourcingAssistant() {
                   onChange={(e) => setAnalyzeJd(e.target.value)}
                   placeholder="Paste the job description..."
                   rows={5}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
               </div>
 
@@ -943,9 +943,9 @@ export default function SourcingAssistant() {
                   onChange={(e) => setAnalyzeText(e.target.value)}
                   placeholder={`Paste a candidate's public profile text here...\n\nFor multiple candidates, separate each profile with --- on its own line:\n\nProfile 1 text here...\n---\nProfile 2 text here...`}
                   rows={8}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
                 />
-                <p className="text-xs text-muted mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Paste public profile content only. Separate multiple profiles
                   with --- on its own line.
                 </p>
@@ -991,7 +991,7 @@ export default function SourcingAssistant() {
                                         ? "bg-gray-200 text-gray-700"
                                         : i === 2
                                           ? "bg-orange-100 text-orange-700"
-                                          : "bg-gray-100 text-muted"
+                                          : "bg-gray-100 text-muted-foreground"
                                   }`}
                                 >
                                   {i + 1}
@@ -1169,7 +1169,7 @@ export default function SourcingAssistant() {
                   {analyzeResults.filter((r) => r.error && !r.fitScore)
                     .length > 0 && (
                     <div className="mt-4">
-                      <h3 className="text-sm font-medium text-muted mb-2">
+                      <h3 className="text-sm font-medium text-muted-foreground mb-2">
                         Failed to analyze
                       </h3>
                       {analyzeResults

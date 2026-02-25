@@ -27,7 +27,7 @@ export default function Nav() {
               className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                 pathname === link.href
                   ? "bg-primary-light text-primary"
-                  : "text-muted hover:text-foreground hover:bg-gray-100"
+                  : "text-muted-foreground hover:text-foreground hover:bg-gray-100"
               }`}
             >
               {link.label}

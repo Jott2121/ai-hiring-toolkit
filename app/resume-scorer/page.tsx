@@ -162,7 +162,7 @@ export default function ResumeScorer() {
         <h1 className="text-3xl font-bold text-foreground">
           Resume Scoring Engine
         </h1>
-        <p className="mt-2 text-muted">
+        <p className="mt-2 text-muted-foreground">
           Upload a job description and resumes to instantly receive structured
           candidate evaluations, ranked from strongest to weakest.
         </p>
@@ -179,7 +179,7 @@ export default function ResumeScorer() {
             value={roleTitle}
             onChange={(e) => setRoleTitle(e.target.value)}
             placeholder="e.g. Senior Software Engineer"
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
           />
         </div>
 
@@ -192,7 +192,7 @@ export default function ResumeScorer() {
             onChange={(e) => setJobDescription(e.target.value)}
             placeholder="Paste the full job description here..."
             rows={8}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
           />
         </div>
 
@@ -216,7 +216,7 @@ export default function ResumeScorer() {
                 : "border-border hover:border-primary/50 hover:bg-primary-light/50"
             }`}
           >
-            <p className="text-muted">
+            <p className="text-muted-foreground">
               Drop PDF or DOCX files here, or{" "}
               <span className="text-primary font-medium">browse</span>
             </p>
@@ -271,7 +271,7 @@ export default function ResumeScorer() {
             Require security clearance
           </label>
           {requireClearance && (
-            <span className="text-xs text-muted">
+            <span className="text-xs text-muted-foreground">
               Candidates without clearance will be flagged
             </span>
           )}
@@ -299,7 +299,7 @@ export default function ResumeScorer() {
       {isLoading && (
         <div className="mt-8 text-center">
           <div className="inline-block w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="mt-3 text-muted">
+          <p className="mt-3 text-muted-foreground">
             Analyzing resumes against job requirements...
           </p>
         </div>
@@ -317,7 +317,7 @@ export default function ResumeScorer() {
                   analyzed
                 </span>
                 {requireClearance && (
-                  <span className="text-muted">
+                  <span className="text-muted-foreground">
                     {withClearance} with clearance
                   </span>
                 )}
@@ -330,7 +330,7 @@ export default function ResumeScorer() {
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       filterClearance
                         ? "bg-primary text-white"
-                        : "bg-gray-100 text-muted hover:text-foreground"
+                        : "bg-gray-100 text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     Clearance Only
@@ -344,7 +344,7 @@ export default function ResumeScorer() {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     viewMode === "top5"
                       ? "bg-primary text-white"
-                      : "bg-gray-100 text-muted hover:text-foreground"
+                      : "bg-gray-100 text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Top 5
@@ -357,7 +357,7 @@ export default function ResumeScorer() {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                     viewMode === "all" && !filterClearance
                       ? "bg-primary text-white"
-                      : "bg-gray-100 text-muted hover:text-foreground"
+                      : "bg-gray-100 text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Show All
@@ -395,7 +395,7 @@ export default function ResumeScorer() {
                                   ? "bg-gray-200 text-gray-700"
                                   : i === 2
                                     ? "bg-orange-100 text-orange-700"
-                                    : "bg-gray-100 text-muted"
+                                    : "bg-gray-100 text-muted-foreground"
                             }`}
                           >
                             {i + 1}
@@ -561,7 +561,7 @@ export default function ResumeScorer() {
               ))}
             </div>
           ) : (
-            <div className="bg-card rounded-xl border border-border p-6 shadow-sm text-center text-muted">
+            <div className="bg-card rounded-xl border border-border p-6 shadow-sm text-center text-muted-foreground">
               No candidates match the current filters.
             </div>
           )}
@@ -569,7 +569,7 @@ export default function ResumeScorer() {
           {/* Error results */}
           {errorResults.length > 0 && (
             <div className="mt-6">
-              <h3 className="text-sm font-medium text-muted mb-2">
+              <h3 className="text-sm font-medium text-muted-foreground mb-2">
                 Failed to analyze ({errorResults.length})
               </h3>
               {errorResults.map((r, i) => (

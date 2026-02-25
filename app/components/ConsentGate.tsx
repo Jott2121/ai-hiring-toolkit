@@ -37,7 +37,7 @@ export default function ConsentGate({ children }: ConsentGateProps) {
         <h2 className="text-2xl font-bold text-foreground mb-4">
           Before You Begin
         </h2>
-        <p className="text-muted mb-4">
+        <p className="text-muted-foreground mb-4">
           The Sourcing Assistant helps you generate search strategies, craft
           outreach messages, and evaluate public profile data. Please review the
           following before proceeding:
