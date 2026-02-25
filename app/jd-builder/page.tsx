@@ -65,7 +65,7 @@ export default function JDBuilder() {
         <h1 className="text-3xl font-bold text-foreground">
           Smart JD Builder
         </h1>
-        <p className="mt-2 text-muted">
+        <p className="mt-2 text-muted-foreground">
           Paste rough hiring notes and get a polished job description, LinkedIn
           post, candidate summary, and boolean search string.
         </p>
@@ -82,7 +82,7 @@ export default function JDBuilder() {
             value={roleTitle}
             onChange={(e) => setRoleTitle(e.target.value)}
             placeholder="e.g. Senior Software Engineer"
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function JDBuilder() {
             onChange={(e) => setNotes(e.target.value)}
             placeholder={`Paste your hiring manager notes, intake call notes, or rough job requirements here...\n\nExample:\n- Need a senior backend engineer\n- Must know Python and AWS\n- Team of 5, reports to VP Eng\n- Remote OK, prefer EST timezone\n- Building data pipeline for ML team`}
             rows={10}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-y"
           />
         </div>
 
@@ -119,7 +119,7 @@ export default function JDBuilder() {
       {isLoading && (
         <div className="mt-8 text-center">
           <div className="inline-block w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="mt-3 text-muted">
+          <p className="mt-3 text-muted-foreground">
             Generating polished recruiting materials...
           </p>
         </div>
@@ -136,7 +136,7 @@ export default function JDBuilder() {
                 className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition-colors ${
                   activeTab === tab.key
                     ? "border-primary text-primary"
-                    : "border-transparent text-muted hover:text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {tab.label}
