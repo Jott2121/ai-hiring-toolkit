@@ -1,5 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 
+const PRIMARY_MODEL = "claude-sonnet-4-20250514";
+const FALLBACK_MODEL = "claude-haiku-4-5-20251001";
+
+function isOverloaded(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : "";
+  return msg.includes("overloaded") || msg.includes("529");
+}
+
 export async function POST(request: Request) {
   try {
     if (!process.env.ANTHROPIC_API_KEY) {
@@ -27,14 +35,13 @@ export async function POST(request: Request) {
       maxRetries: 3,
     });
 
-    const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+    const requestParams = {
       max_tokens: 3500,
       system:
         "You are an expert recruiter preparing interview materials. Respond with ONLY valid JSON. No markdown, no code blocks, no explanation — just the raw JSON object.",
       messages: [
         {
-          role: "user",
+          role: "user" as const,
           content: `Generate comprehensive interview preparation materials for this role.
 
 Role Title: ${roleTitle}
@@ -60,7 +67,18 @@ Return a JSON object with exactly these fields:
 Include 6-8 behavioral questions, 5-7 technical/role-specific questions, and 5-6 scorecard criteria.`,
         },
       ],
-    });
+    };
+
+    let message;
+    try {
+      message = await anthropic.messages.create({ model: PRIMARY_MODEL, ...requestParams });
+    } catch (primaryErr) {
+      if (isOverloaded(primaryErr)) {
+        message = await anthropic.messages.create({ model: FALLBACK_MODEL, ...requestParams });
+      } else {
+        throw primaryErr;
+      }
+    }
 
     const responseText =
       message.content[0].type === "text" ? message.content[0].text : "";
