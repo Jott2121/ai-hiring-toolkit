@@ -36,7 +36,7 @@ export function getClient():
 /** Call Anthropic with automatic model fallback: Sonnet -> Haiku on overload */
 export async function callWithFallback(
   client: Anthropic,
-  params: Omit<Anthropic.MessageCreateParams, "model">
+  params: Omit<Anthropic.MessageCreateParamsNonStreaming, "model">
 ): Promise<Anthropic.Message> {
   try {
     return await client.messages.create({

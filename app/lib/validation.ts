@@ -49,7 +49,7 @@ export function validate<T>(
 ): { success: true; data: T } | { success: false; response: Response } {
   const result = schema.safeParse(data);
   if (!result.success) {
-    const firstError = result.error.errors[0]?.message || "Invalid input.";
+    const firstError = result.error.issues[0]?.message || "Invalid input.";
     return {
       success: false,
       response: Response.json({ error: firstError }, { status: 400 }),
