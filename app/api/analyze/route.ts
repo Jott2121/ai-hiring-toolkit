@@ -2,6 +2,14 @@ import Anthropic from "@anthropic-ai/sdk";
 import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 
+const PRIMARY_MODEL = "claude-sonnet-4-20250514";
+const FALLBACK_MODEL = "claude-haiku-4-5-20251001";
+
+function isOverloaded(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : "";
+  return msg.includes("overloaded") || msg.includes("529");
+}
+
 export async function POST(request: Request) {
   try {
     if (!process.env.ANTHROPIC_API_KEY) {
@@ -62,14 +70,13 @@ export async function POST(request: Request) {
           continue;
         }
 
-        const message = await anthropic.messages.create({
-          model: "claude-sonnet-4-20250514",
+        const requestParams = {
           max_tokens: 2500,
           system:
             "You are an expert recruiter analyzing resumes against job descriptions. Respond with ONLY valid JSON. No markdown, no code blocks, no explanation — just the raw JSON object.",
           messages: [
             {
-              role: "user",
+              role: "user" as const,
               content: `Analyze this candidate's resume against the job description.
 
 Job Title: ${roleTitle}
@@ -98,7 +105,18 @@ Return a JSON object with exactly these fields:
 The evaluationRubric should have 4-5 criteria covering: technical skills, experience relevance, leadership/collaboration, culture fit, and growth potential.${requireClearance ? "\n\nIMPORTANT: This role requires a security clearance. If the candidate does not mention any security clearance on their resume, flag this prominently in the risks array." : ""}`,
             },
           ],
-        });
+        };
+
+        let message;
+        try {
+          message = await anthropic.messages.create({ model: PRIMARY_MODEL, ...requestParams });
+        } catch (primaryErr) {
+          if (isOverloaded(primaryErr)) {
+            message = await anthropic.messages.create({ model: FALLBACK_MODEL, ...requestParams });
+          } else {
+            throw primaryErr;
+          }
+        }
 
         const responseText =
           message.content[0].type === "text" ? message.content[0].text : "";
