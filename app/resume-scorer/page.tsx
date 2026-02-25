@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 
 interface FileInfo {
   file: File;
@@ -16,6 +16,8 @@ interface EvaluationCriteria {
 interface CandidateResult {
   candidateName: string;
   fitScore: number;
+  hasClearance: boolean;
+  clearanceLevel: string;
   strengths: string[];
   risks: string[];
   interviewFocus: string[];
@@ -23,6 +25,8 @@ interface CandidateResult {
   evaluationRubric: EvaluationCriteria[];
   error?: string;
 }
+
+type ViewMode = "all" | "top5";
 
 function toBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -44,6 +48,9 @@ export default function ResumeScorer() {
   const [results, setResults] = useState<CandidateResult[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [requireClearance, setRequireClearance] = useState(false);
+  const [filterClearance, setFilterClearance] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("all");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFiles = useCallback((newFiles: FileList) => {
@@ -85,7 +92,12 @@ export default function ResumeScorer() {
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ roleTitle, jobDescription, resumes }),
+        body: JSON.stringify({
+          roleTitle,
+          jobDescription,
+          resumes,
+          requireClearance,
+        }),
       });
 
       const data = await response.json();
@@ -101,6 +113,36 @@ export default function ResumeScorer() {
       setIsLoading(false);
     }
   };
+
+  // Sort by score (highest first), then apply filters
+  const displayResults = useMemo(() => {
+    if (!results) return null;
+
+    let filtered = [...results]
+      .filter((r) => !r.error || r.fitScore > 0)
+      .sort((a, b) => b.fitScore - a.fitScore);
+
+    // Filter by clearance if enabled
+    if (filterClearance) {
+      filtered = filtered.filter((r) => r.hasClearance);
+    }
+
+    // Top 5 filter
+    if (viewMode === "top5") {
+      filtered = filtered.slice(0, 5);
+    }
+
+    return filtered;
+  }, [results, viewMode, filterClearance]);
+
+  // Candidates that had errors
+  const errorResults = useMemo(() => {
+    if (!results) return [];
+    return results.filter((r) => r.error && !r.fitScore);
+  }, [results]);
+
+  const totalAnalyzed = results?.length ?? 0;
+  const withClearance = results?.filter((r) => r.hasClearance).length ?? 0;
 
   const scoreColor = (score: number) => {
     if (score >= 71) return "bg-emerald-500";
@@ -122,7 +164,7 @@ export default function ResumeScorer() {
         </h1>
         <p className="mt-2 text-muted">
           Upload a job description and resumes to instantly receive structured
-          candidate evaluations.
+          candidate evaluations, ranked from strongest to weakest.
         </p>
       </div>
 
@@ -210,6 +252,31 @@ export default function ResumeScorer() {
           )}
         </div>
 
+        {/* Clearance Requirement Toggle */}
+        <div className="mb-5 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setRequireClearance(!requireClearance)}
+            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+              requireClearance ? "bg-primary" : "bg-gray-200"
+            }`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition-transform ${
+                requireClearance ? "translate-x-5" : "translate-x-0"
+              }`}
+            />
+          </button>
+          <label className="text-sm font-medium">
+            Require security clearance
+          </label>
+          {requireClearance && (
+            <span className="text-xs text-muted">
+              Candidates without clearance will be flagged
+            </span>
+          )}
+        </div>
+
         <button
           onClick={handleSubmit}
           disabled={
@@ -241,164 +308,280 @@ export default function ResumeScorer() {
       {/* Results */}
       {results && results.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">Candidate Results</h2>
-          <div className="space-y-6">
-            {results.map((candidate, i) => (
-              <div
-                key={i}
-                className="bg-card rounded-xl border border-border p-6 shadow-sm"
-              >
-                {candidate.error && !candidate.fitScore ? (
-                  <div className="text-red-600">{candidate.error}</div>
-                ) : (
-                  <>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold">
-                        {candidate.candidateName}
-                      </h3>
-                      <span
-                        className={`text-2xl font-bold ${scoreTextColor(candidate.fitScore)}`}
-                      >
-                        {candidate.fitScore}/100
-                      </span>
-                    </div>
-
-                    <div className="w-full bg-gray-100 rounded-full h-2 mb-6">
-                      <div
-                        className={`h-2 rounded-full ${scoreColor(candidate.fitScore)} transition-all`}
-                        style={{ width: `${candidate.fitScore}%` }}
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <h4 className="font-medium text-emerald-700 mb-2">
-                          Strengths
-                        </h4>
-                        <ul className="space-y-1">
-                          {candidate.strengths.map((s, j) => (
-                            <li
-                              key={j}
-                              className="text-sm text-foreground/80 flex items-start gap-2"
-                            >
-                              <span className="text-emerald-500 mt-0.5 shrink-0">
-                                +
-                              </span>
-                              {s}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-amber-700 mb-2">
-                          Risks & Gaps
-                        </h4>
-                        <ul className="space-y-1">
-                          {candidate.risks.map((r, j) => (
-                            <li
-                              key={j}
-                              className="text-sm text-foreground/80 flex items-start gap-2"
-                            >
-                              <span className="text-amber-500 mt-0.5 shrink-0">
-                                -
-                              </span>
-                              {r}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="mb-6">
-                      <h4 className="font-medium mb-2">
-                        Interview Focus Areas
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {candidate.interviewFocus.map((f, j) => (
-                          <span
-                            key={j}
-                            className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm"
-                          >
-                            {f}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mb-6">
-                      <h4 className="font-medium mb-2">
-                        Suggested Interview Questions
-                      </h4>
-                      <ol className="space-y-2 list-decimal list-inside">
-                        {candidate.suggestedQuestions.map((q, j) => (
-                          <li
-                            key={j}
-                            className="text-sm text-foreground/80"
-                          >
-                            {q}
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-
-                    {candidate.evaluationRubric &&
-                      candidate.evaluationRubric.length > 0 && (
-                        <div>
-                          <h4 className="font-medium mb-2">
-                            Evaluation Rubric
-                          </h4>
-                          <div className="border border-border rounded-lg overflow-hidden">
-                            <table className="w-full text-sm">
-                              <thead className="bg-gray-50">
-                                <tr>
-                                  <th className="px-4 py-2 text-left font-medium">
-                                    Criteria
-                                  </th>
-                                  <th className="px-4 py-2 text-left font-medium">
-                                    Assessment
-                                  </th>
-                                  <th className="px-4 py-2 text-left font-medium">
-                                    Rating
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {candidate.evaluationRubric.map((r, j) => (
-                                  <tr
-                                    key={j}
-                                    className="border-t border-border"
-                                  >
-                                    <td className="px-4 py-2 font-medium">
-                                      {r.criteria}
-                                    </td>
-                                    <td className="px-4 py-2 text-foreground/70">
-                                      {r.assessment}
-                                    </td>
-                                    <td className="px-4 py-2">
-                                      <span
-                                        className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                                          r.rating === "strong"
-                                            ? "bg-emerald-100 text-emerald-700"
-                                            : r.rating === "moderate"
-                                              ? "bg-amber-100 text-amber-700"
-                                              : "bg-red-100 text-red-700"
-                                        }`}
-                                      >
-                                        {r.rating}
-                                      </span>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      )}
-                  </>
+          {/* Summary Bar */}
+          <div className="bg-card rounded-xl border border-border p-4 shadow-sm mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4 text-sm">
+                <span className="font-medium">
+                  {totalAnalyzed} candidate{totalAnalyzed !== 1 ? "s" : ""}{" "}
+                  analyzed
+                </span>
+                {requireClearance && (
+                  <span className="text-muted">
+                    {withClearance} with clearance
+                  </span>
                 )}
               </div>
-            ))}
+              <div className="flex items-center gap-2">
+                {/* Clearance filter */}
+                {requireClearance && (
+                  <button
+                    onClick={() => setFilterClearance(!filterClearance)}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                      filterClearance
+                        ? "bg-primary text-white"
+                        : "bg-gray-100 text-muted hover:text-foreground"
+                    }`}
+                  >
+                    Clearance Only
+                  </button>
+                )}
+                {/* View mode toggle */}
+                <button
+                  onClick={() =>
+                    setViewMode(viewMode === "all" ? "top5" : "all")
+                  }
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    viewMode === "top5"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted hover:text-foreground"
+                  }`}
+                >
+                  Top 5
+                </button>
+                <button
+                  onClick={() => {
+                    setViewMode("all");
+                    setFilterClearance(false);
+                  }}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    viewMode === "all" && !filterClearance
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted hover:text-foreground"
+                  }`}
+                >
+                  Show All
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Ranking Header */}
+          <h2 className="text-xl font-semibold mb-4">
+            Candidate Rankings
+            {viewMode === "top5" && " (Top 5)"}
+            {filterClearance && " — Clearance Holders Only"}
+          </h2>
+
+          {displayResults && displayResults.length > 0 ? (
+            <div className="space-y-6">
+              {displayResults.map((candidate, i) => (
+                <div
+                  key={i}
+                  className="bg-card rounded-xl border border-border p-6 shadow-sm"
+                >
+                  {candidate.error && !candidate.fitScore ? (
+                    <div className="text-red-600">{candidate.error}</div>
+                  ) : (
+                    <>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          {/* Rank Badge */}
+                          <span
+                            className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${
+                              i === 0
+                                ? "bg-amber-100 text-amber-700"
+                                : i === 1
+                                  ? "bg-gray-200 text-gray-700"
+                                  : i === 2
+                                    ? "bg-orange-100 text-orange-700"
+                                    : "bg-gray-100 text-muted"
+                            }`}
+                          >
+                            {i + 1}
+                          </span>
+                          <div>
+                            <h3 className="text-lg font-semibold">
+                              {candidate.candidateName}
+                            </h3>
+                            {/* Clearance Badge */}
+                            {candidate.hasClearance && (
+                              <span className="inline-block mt-0.5 px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-medium">
+                                {candidate.clearanceLevel || "Clearance"}
+                              </span>
+                            )}
+                            {requireClearance && !candidate.hasClearance && (
+                              <span className="inline-block mt-0.5 px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-medium">
+                                No Clearance
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <span
+                          className={`text-2xl font-bold ${scoreTextColor(candidate.fitScore)}`}
+                        >
+                          {candidate.fitScore}/100
+                        </span>
+                      </div>
+
+                      <div className="w-full bg-gray-100 rounded-full h-2 mb-6">
+                        <div
+                          className={`h-2 rounded-full ${scoreColor(candidate.fitScore)} transition-all`}
+                          style={{ width: `${candidate.fitScore}%` }}
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                          <h4 className="font-medium text-emerald-700 mb-2">
+                            Strengths
+                          </h4>
+                          <ul className="space-y-1">
+                            {candidate.strengths.map((s, j) => (
+                              <li
+                                key={j}
+                                className="text-sm text-foreground/80 flex items-start gap-2"
+                              >
+                                <span className="text-emerald-500 mt-0.5 shrink-0">
+                                  +
+                                </span>
+                                {s}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-amber-700 mb-2">
+                            Risks & Gaps
+                          </h4>
+                          <ul className="space-y-1">
+                            {candidate.risks.map((r, j) => (
+                              <li
+                                key={j}
+                                className="text-sm text-foreground/80 flex items-start gap-2"
+                              >
+                                <span className="text-amber-500 mt-0.5 shrink-0">
+                                  -
+                                </span>
+                                {r}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-2">
+                          Interview Focus Areas
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {candidate.interviewFocus.map((f, j) => (
+                            <span
+                              key={j}
+                              className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm"
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mb-6">
+                        <h4 className="font-medium mb-2">
+                          Suggested Interview Questions
+                        </h4>
+                        <ol className="space-y-2 list-decimal list-inside">
+                          {candidate.suggestedQuestions.map((q, j) => (
+                            <li
+                              key={j}
+                              className="text-sm text-foreground/80"
+                            >
+                              {q}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+
+                      {candidate.evaluationRubric &&
+                        candidate.evaluationRubric.length > 0 && (
+                          <div>
+                            <h4 className="font-medium mb-2">
+                              Evaluation Rubric
+                            </h4>
+                            <div className="border border-border rounded-lg overflow-hidden">
+                              <table className="w-full text-sm">
+                                <thead className="bg-gray-50">
+                                  <tr>
+                                    <th className="px-4 py-2 text-left font-medium">
+                                      Criteria
+                                    </th>
+                                    <th className="px-4 py-2 text-left font-medium">
+                                      Assessment
+                                    </th>
+                                    <th className="px-4 py-2 text-left font-medium">
+                                      Rating
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {candidate.evaluationRubric.map((r, j) => (
+                                    <tr
+                                      key={j}
+                                      className="border-t border-border"
+                                    >
+                                      <td className="px-4 py-2 font-medium">
+                                        {r.criteria}
+                                      </td>
+                                      <td className="px-4 py-2 text-foreground/70">
+                                        {r.assessment}
+                                      </td>
+                                      <td className="px-4 py-2">
+                                        <span
+                                          className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                                            r.rating === "strong"
+                                              ? "bg-emerald-100 text-emerald-700"
+                                              : r.rating === "moderate"
+                                                ? "bg-amber-100 text-amber-700"
+                                                : "bg-red-100 text-red-700"
+                                          }`}
+                                        >
+                                          {r.rating}
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-card rounded-xl border border-border p-6 shadow-sm text-center text-muted">
+              No candidates match the current filters.
+            </div>
+          )}
+
+          {/* Error results */}
+          {errorResults.length > 0 && (
+            <div className="mt-6">
+              <h3 className="text-sm font-medium text-muted mb-2">
+                Failed to analyze ({errorResults.length})
+              </h3>
+              {errorResults.map((r, i) => (
+                <div
+                  key={i}
+                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm mb-2"
+                >
+                  {r.candidateName}: {r.error}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { roleTitle, jobDescription, resumes } = body;
+    const { roleTitle, jobDescription, resumes, requireClearance } = body;
 
     if (!roleTitle || !jobDescription || !resumes?.length) {
       return Response.json(
@@ -81,6 +81,8 @@ Return a JSON object with exactly these fields:
 {
   "candidateName": "Full name from resume",
   "fitScore": <number 0-100>,
+  "hasClearance": <boolean - true if resume mentions any security clearance (Secret, Top Secret, TS/SCI, Public Trust, etc.), false otherwise>,
+  "clearanceLevel": "<string - the specific clearance level mentioned, or 'None' if no clearance found>",
   "strengths": ["3-5 key strengths aligned to this role"],
   "risks": ["2-4 potential risks or gaps"],
   "interviewFocus": ["2-3 areas to probe in an interview"],
@@ -90,7 +92,7 @@ Return a JSON object with exactly these fields:
   ]
 }
 
-The evaluationRubric should have 4-5 criteria covering: technical skills, experience relevance, leadership/collaboration, culture fit, and growth potential.`,
+The evaluationRubric should have 4-5 criteria covering: technical skills, experience relevance, leadership/collaboration, culture fit, and growth potential.${requireClearance ? "\n\nIMPORTANT: This role requires a security clearance. If the candidate does not mention any security clearance on their resume, flag this prominently in the risks array." : ""}`,
             },
           ],
         });
