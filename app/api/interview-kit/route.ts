@@ -22,7 +22,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+      maxRetries: 3,
+    });
 
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
@@ -86,6 +89,15 @@ Include 6-8 behavioral questions, 5-7 technical/role-specific questions, and 5-6
             "Your Anthropic API account needs credits. Go to console.anthropic.com → Plans & Billing to add credits.",
         },
         { status: 402 }
+      );
+    }
+    if (message.includes("overloaded") || message.includes("529")) {
+      return Response.json(
+        {
+          error:
+            "The AI service is temporarily overloaded. Please wait a minute and try again.",
+        },
+        { status: 529 }
       );
     }
     return Response.json({ error: message }, { status: 500 });
