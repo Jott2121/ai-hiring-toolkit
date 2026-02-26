@@ -6,12 +6,16 @@ const articles = [
     description:
       "Most JDs read like legal documents. Here\u2019s how to write one that makes people want to apply.",
     tag: "JD Writing",
+    href: "#",
+    status: "coming-soon" as const,
   },
   {
     title: "Boolean Search Strings for Technical Recruiters (2026 Edition)",
     description:
       "Copy-paste Boolean strings for finding software engineers, data scientists, and product managers on LinkedIn.",
     tag: "Sourcing",
+    href: "/blog/boolean-search-strings-2026",
+    status: "published" as const,
   },
   {
     title:
@@ -19,6 +23,8 @@ const articles = [
     description:
       "A step-by-step checklist for teams making their first few hires without a dedicated recruiter.",
     tag: "Process",
+    href: "#",
+    status: "coming-soon" as const,
   },
 ];
 
@@ -41,7 +47,7 @@ export default function BlogPage() {
         {articles.map((article) => (
           <Link
             key={article.title}
-            href="#"
+            href={article.href}
             className="group block rounded-xl border border-border bg-card p-6 hover:shadow-md hover:border-primary/20 transition-all"
           >
             <div className="flex items-start justify-between gap-4">
@@ -56,9 +62,15 @@ export default function BlogPage() {
                   {article.description}
                 </p>
               </div>
-              <span className="shrink-0 mt-1 text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-                Coming soon
-              </span>
+              {article.status === "coming-soon" ? (
+                <span className="shrink-0 mt-1 text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
+                  Coming soon
+                </span>
+              ) : (
+                <span className="shrink-0 mt-1 text-xs font-medium text-primary">
+                  Read article →
+                </span>
+              )}
             </div>
           </Link>
         ))}

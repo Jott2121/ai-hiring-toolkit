@@ -178,7 +178,7 @@ const pricingPlans: PricingPlan[] = [
       "Priority support",
     ],
     cta: "Join Pro Waitlist",
-    href: "/resume-scorer",
+    href: "/waitlist",
     highlighted: true,
     badge: "Early Access",
     subtitle: "Lock in this price \u2014 it\u2019s going up after beta.",
@@ -198,7 +198,7 @@ const pricingPlans: PricingPlan[] = [
       "Dedicated support",
     ],
     cta: "Request Early Access",
-    href: "/resume-scorer",
+    href: "/waitlist",
     subtitle: "Coming Q2 2026",
   },
 ];
@@ -418,36 +418,122 @@ export default function Home() {
           <p className="text-sm font-semibold tracking-wider text-primary uppercase mb-4 text-center">See it in action</p>
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What you&apos;ll actually get</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 */}
+            {/* Card 1 — Resume Scoring Dashboard Mock */}
             <div className="rounded-xl border bg-card p-6 space-y-4">
-              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
-                <div className="text-center">
-                  <p className="text-4xl mb-2">📊</p>
-                  <p className="text-sm">Resume Ranking Dashboard</p>
+              <div className="h-64 rounded-lg bg-gradient-to-b from-slate-900 to-slate-800 p-4 text-left overflow-hidden">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-medium text-slate-400">Resume Scorer — Senior Frontend Engineer</span>
+                  <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">3 candidates</span>
+                </div>
+                <div className="space-y-2">
+                  {/* Candidate 1 */}
+                  <div className="bg-slate-700/50 rounded-md p-2.5">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-white">Alex Chen</span>
+                      <span className="text-sm font-bold text-emerald-400">92%</span>
+                    </div>
+                    <div className="w-full bg-slate-600 rounded-full h-1.5 mb-1.5">
+                      <div className="bg-emerald-400 h-1.5 rounded-full" style={{width: '92%'}}></div>
+                    </div>
+                    <div className="flex gap-1.5 flex-wrap">
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">React 6yr</span>
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">Team Lead</span>
+                      <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">No AWS exp</span>
+                    </div>
+                  </div>
+                  {/* Candidate 2 */}
+                  <div className="bg-slate-700/50 rounded-md p-2.5">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-white">Priya Patel</span>
+                      <span className="text-sm font-bold text-emerald-400">85%</span>
+                    </div>
+                    <div className="w-full bg-slate-600 rounded-full h-1.5 mb-1.5">
+                      <div className="bg-emerald-400 h-1.5 rounded-full" style={{width: '85%'}}></div>
+                    </div>
+                    <div className="flex gap-1.5 flex-wrap">
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">TypeScript</span>
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">AWS Cert</span>
+                      <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">2yr exp only</span>
+                    </div>
+                  </div>
+                  {/* Candidate 3 - partially visible to imply more */}
+                  <div className="bg-slate-700/50 rounded-md p-2.5 opacity-60">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-white">Jordan Rivera</span>
+                      <span className="text-sm font-bold text-yellow-400">71%</span>
+                    </div>
+                    <div className="w-full bg-slate-600 rounded-full h-1.5">
+                      <div className="bg-yellow-400 h-1.5 rounded-full" style={{width: '71%'}}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <h3 className="font-semibold text-lg">Candidates ranked by fit score</h3>
               <p className="text-sm text-muted-foreground">Upload resumes, paste a JD, and get instant fit scores with strengths, risks, and suggested interview questions for each candidate.</p>
               <Link href="/resume-scorer" className="text-primary text-sm font-medium hover:underline inline-block">Try it free →</Link>
             </div>
-            {/* Card 2 */}
+
+            {/* Card 2 — Boolean Search Output Mock */}
             <div className="rounded-xl border bg-card p-6 space-y-4">
-              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
-                <div className="text-center">
-                  <p className="text-4xl mb-2">🔍</p>
-                  <p className="text-sm">Boolean Search Output</p>
+              <div className="h-64 rounded-lg bg-gradient-to-b from-slate-900 to-slate-800 p-4 text-left overflow-hidden">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-medium text-slate-400">Sourcing — Senior Frontend Engineer</span>
+                  <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">3 variants</span>
+                </div>
+                <div className="space-y-2.5">
+                  <div>
+                    <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-wider">Broad</span>
+                    <div className="bg-slate-700/50 rounded-md p-2 mt-1">
+                      <code className="text-[11px] text-slate-300 leading-relaxed">(&quot;frontend&quot; OR &quot;front-end&quot; OR &quot;front end&quot;) AND (&quot;react&quot; OR &quot;vue&quot; OR &quot;angular&quot;) AND (&quot;senior&quot; OR &quot;lead&quot; OR &quot;staff&quot;)</code>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">Targeted</span>
+                    <div className="bg-slate-700/50 rounded-md p-2 mt-1">
+                      <code className="text-[11px] text-slate-300 leading-relaxed">(&quot;senior frontend&quot; OR &quot;staff engineer&quot;) AND &quot;react&quot; AND (&quot;typescript&quot; OR &quot;node&quot;) AND (&quot;SaaS&quot; OR &quot;B2B&quot;)</code>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-semibold text-purple-400 uppercase tracking-wider">Narrow</span>
+                    <div className="bg-slate-700/50 rounded-md p-2 mt-1">
+                      <code className="text-[11px] text-slate-300 leading-relaxed">&quot;senior frontend engineer&quot; AND &quot;react&quot; AND &quot;typescript&quot; AND &quot;AWS&quot; AND (&quot;series A&quot; OR &quot;series B&quot;)</code>
+                    </div>
+                  </div>
                 </div>
               </div>
               <h3 className="font-semibold text-lg">AI-generated search strings</h3>
               <p className="text-sm text-muted-foreground">Get broad, targeted, and narrow Boolean strings ready for LinkedIn, GitHub, and Stack Overflow &mdash; plus personalized outreach templates.</p>
               <Link href="/sourcing" className="text-primary text-sm font-medium hover:underline inline-block">Try sourcing →</Link>
             </div>
-            {/* Card 3 */}
+
+            {/* Card 3 — Interview Kit Mock */}
             <div className="rounded-xl border bg-card p-6 space-y-4">
-              <div className="h-48 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
-                <div className="text-center">
-                  <p className="text-4xl mb-2">📋</p>
-                  <p className="text-sm">Interview Kit Builder</p>
+              <div className="h-64 rounded-lg bg-gradient-to-b from-slate-900 to-slate-800 p-4 text-left overflow-hidden">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-medium text-slate-400">Interview Kit — Alex Chen</span>
+                  <span className="text-xs bg-violet-500/20 text-violet-400 px-2 py-0.5 rounded-full">8 questions</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="bg-slate-700/50 rounded-md p-2.5">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded">Behavioral</span>
+                    </div>
+                    <p className="text-xs text-slate-300">&quot;Tell me about a time you led a frontend migration. What broke, and how did you recover?&quot;</p>
+                    <p className="text-[10px] text-slate-500 mt-1">Evaluates: leadership under pressure, technical depth</p>
+                  </div>
+                  <div className="bg-slate-700/50 rounded-md p-2.5">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">Technical</span>
+                    </div>
+                    <p className="text-xs text-slate-300">&quot;How would you architect a real-time dashboard handling 10K concurrent WebSocket connections?&quot;</p>
+                    <p className="text-[10px] text-slate-500 mt-1">Evaluates: system design, scalability thinking</p>
+                  </div>
+                  <div className="bg-slate-700/50 rounded-md p-2.5 opacity-60">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">Risk Probe</span>
+                    </div>
+                    <p className="text-xs text-slate-300">&quot;Your resume doesn&apos;t mention cloud infrastructure. Walk me through...&quot;</p>
+                  </div>
                 </div>
               </div>
               <h3 className="font-semibold text-lg">Structured interview prep</h3>
@@ -455,7 +541,6 @@ export default function Home() {
               <Link href="/interview-kit" className="text-primary text-sm font-medium hover:underline inline-block">Build a kit →</Link>
             </div>
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-8">📸 Live product screenshots coming soon &mdash; the tools are fully functional now.</p>
         </div>
       </section>
 
@@ -731,10 +816,14 @@ export default function Home() {
       </section>
 
       {/* ─── Built by a Recruiter ──────────────────────── */}
-      <section className="py-20 bg-muted/30">
+      <section id="founder" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <p className="text-sm font-semibold tracking-wider text-primary uppercase mb-4">Why MeritForge exists</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Built by a Recruiter Who Got Tired of the Busywork</h2>
+          {/* TODO: Replace with actual headshot - use next/image with /public/jeff-headshot.jpg */}
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 border-2 border-primary/20 flex items-center justify-center mx-auto mb-6">
+            <span className="text-3xl font-bold text-primary">J</span>
+          </div>
           <div className="text-lg text-muted-foreground space-y-4 text-left max-w-2xl mx-auto">
             <p>
               I&apos;m Jeff &mdash; a Talent Acquisition Manager who&apos;s screened thousands of candidates for roles at one of the largest defense contractors in the world.
@@ -744,6 +833,11 @@ export default function Home() {
             </p>
             <p>
               Every tool in this kit solves a problem I&apos;ve personally hit &mdash; and it&apos;s designed for teams that need to hire well without a dedicated recruiting department.
+            </p>
+          </div>
+          <div className="bg-primary/5 border-l-4 border-primary rounded-r-lg p-4 mt-6 mb-8 max-w-2xl mx-auto text-left">
+            <p className="text-base italic text-muted-foreground">
+              &quot;I built every feature in this toolkit because I needed it myself. No focus groups &mdash; just years of doing this job and knowing what wastes time.&quot;
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm text-muted-foreground">
@@ -864,12 +958,20 @@ export default function Home() {
               <p className="font-semibold text-foreground text-xs uppercase tracking-wider mb-4">
                 Company
               </p>
+              {/* TODO: Replace mailto below with Jeff's actual contact email */}
               <ul className="space-y-2.5">
-                {["About", "Blog", "Careers", "Contact"].map((label) => (
-                  <li key={label}>
-                    <span className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                      {label}
-                    </span>
+                {[
+                  { label: "About", href: "/#founder" },
+                  { label: "Blog", href: "/blog" },
+                  { label: "Contact", href: "mailto:meritforgeai@gmail.com" },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -879,15 +981,19 @@ export default function Home() {
                 Legal
               </p>
               <ul className="space-y-2.5">
-                {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
-                  (label) => (
-                    <li key={label}>
-                      <span className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                        {label}
-                      </span>
-                    </li>
-                  )
-                )}
+                {[
+                  { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Terms of Service", href: "/terms" },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
