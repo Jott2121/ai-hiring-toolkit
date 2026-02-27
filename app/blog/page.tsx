@@ -6,8 +6,8 @@ const articles = [
     description:
       "Most JDs read like legal documents. Here\u2019s how to write one that makes people want to apply.",
     tag: "JD Writing",
-    href: "#",
-    status: "coming-soon" as const,
+    href: "/blog/write-job-description-that-attracts",
+    status: "published" as const,
   },
   {
     title: "Boolean Search Strings for Technical Recruiters (2026 Edition)",
@@ -23,8 +23,16 @@ const articles = [
     description:
       "A step-by-step checklist for teams making their first few hires without a dedicated recruiter.",
     tag: "Process",
-    href: "#",
-    status: "coming-soon" as const,
+    href: "/blog/small-team-hiring-checklist",
+    status: "published" as const,
+  },
+  {
+    title: "AI Recruiting Tools for Small Businesses: What Actually Works in 2026",
+    description:
+      "An honest take on which AI tools are worth using for hiring \u2014 and which are just hype.",
+    tag: "AI & Hiring",
+    href: "/blog/ai-recruiting-tools-small-business",
+    status: "published" as const,
   },
 ];
 
@@ -62,15 +70,9 @@ export default function BlogPage() {
                   {article.description}
                 </p>
               </div>
-              {article.status === "coming-soon" ? (
-                <span className="shrink-0 mt-1 text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-                  Coming soon
-                </span>
-              ) : (
-                <span className="shrink-0 mt-1 text-xs font-medium text-primary">
-                  Read article →
-                </span>
-              )}
+              <span className="shrink-0 mt-1 text-xs font-medium text-primary">
+                Read article →
+              </span>
             </div>
           </Link>
         ))}
