@@ -1,0 +1,28 @@
+From 4706ebbc815dcb9195a7831293d28545e4772411 Mon Sep 17 00:00:00 2001
+From: Jeff Otterson <jeff_otterson@yahoo.com>
+Date: Fri, 27 Feb 2026 01:56:42 +0000
+Subject: [PATCH] Update page title and meta description to MeritForge branding
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+---
+ app/layout.tsx | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/app/layout.tsx b/app/layout.tsx
+index fb72cd2..7a40c39 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
+ });
+ 
+ export const metadata: Metadata = {
+-  title: "AI Hiring Toolkit",
+-  description: "Your AI recruiting assistant for resume screening and interview preparation.",
++  title: "MeritForge — AI Recruiting Tools for Small Teams",
++  description: "AI-powered recruiting tools that source, screen, and engage candidates. From open req to outreach in minutes. Built for small teams and solo recruiters.",
+ };
+ 
+ export default function RootLayout({
+-- 
+2.34.1
+

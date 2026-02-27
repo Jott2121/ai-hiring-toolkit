@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Hiring Toolkit",
-  description: "Your AI recruiting assistant for resume screening and interview preparation.",
+  title: "MeritForge — AI Recruiting Tools for Small Teams",
+  description: "AI-powered recruiting tools that source, screen, and engage candidates. From open req to outreach in minutes. Built for small teams and solo recruiters.",
 };
 
 export default function RootLayout({
