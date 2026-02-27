@@ -157,6 +157,7 @@ const pricingPlans: PricingPlan[] = [
       "5 resume scores per month",
       "3 JD generations per month",
       "2 interview kits per month",
+      "1 sourcing strategy per month",
       "Basic Boolean search",
       "Community support",
     ],
@@ -165,41 +166,24 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Pro",
-    monthlyPrice: 39,
-    annualPrice: 31,
-    description: "For recruiters who hire every week",
+    monthlyPrice: 29,
+    annualPrice: 19,
+    description: "For recruiters and small teams who hire every week",
     features: [
       "Unlimited resume scoring",
       "Unlimited JD generation",
       "Unlimited interview kits",
+      "Unlimited sourcing strategies",
       "Full Sourcing Assistant",
       "Outreach message builder",
       "Profile fit analyzer",
       "Priority support",
     ],
-    cta: "Join Pro Waitlist",
+    cta: "Upgrade to Pro",
     href: "/waitlist",
     highlighted: true,
-    badge: "Early Access",
+    badge: "Most Popular",
     subtitle: "Lock in this price \u2014 it\u2019s going up after beta.",
-  },
-  {
-    name: "Team",
-    monthlyPrice: 99,
-    annualPrice: 79,
-    description: "For growing teams with shared workflows",
-    features: [
-      "Everything in Pro",
-      "5 team members included",
-      "Shared JD library",
-      "Team analytics dashboard",
-      "Custom evaluation rubrics",
-      "SSO & audit log",
-      "Dedicated support",
-    ],
-    cta: "Request Early Access",
-    href: "/waitlist",
-    subtitle: "Coming Q2 2026",
   },
 ];
 
@@ -715,7 +699,7 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
           variants={stagger}
-          className="grid md:grid-cols-3 gap-6 items-start"
+          className="grid md:grid-cols-2 gap-6 items-start max-w-3xl mx-auto"
         >
           {pricingPlans.map((plan) => (
             <motion.div key={plan.name} variants={fadeUp}>
@@ -826,7 +810,7 @@ export default function Home() {
           </div>
           <div className="text-lg text-muted-foreground space-y-4 text-left max-w-2xl mx-auto">
             <p>
-              I&apos;m Jeff &mdash; a Talent Acquisition Manager who&apos;s screened thousands of candidates for roles at one of the largest defense contractors in the world.
+              I&apos;m Jeff &mdash; a Talent Acquisition Manager with 10+ years of experience screening thousands of candidates across enterprise and high-growth environments.
             </p>
             <p>
               I built MeritForge because I kept watching small teams drown in the same manual processes that big companies solve with $100K/year ATS platforms. Writing JDs from scratch. Copy-pasting Boolean strings from three-year-old blog posts. Printing resumes to rank them by hand.

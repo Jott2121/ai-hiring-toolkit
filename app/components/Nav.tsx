@@ -18,7 +18,7 @@ export default function Nav() {
     <header className="border-b border-border bg-card">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
         <Link href="/" className="font-semibold text-foreground text-lg">
-          AI Hiring Toolkit
+          MeritForge
         </Link>
         <nav className="flex items-center gap-1">
           {links.map((link) => (

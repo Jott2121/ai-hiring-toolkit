@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const validation = validate(booleanSearchSchema, body);
     if (!validation.success) return validation.response;
 
-    const { jobDescription, location, experienceLevel, diversityFlags } =
+    const { jobDescription, location, experienceLevel } =
       validation.data;
 
     const message = await callWithFallback(clientResult.client, {
@@ -23,8 +23,7 @@ export async function POST(request: Request) {
           content: buildBooleanUserPrompt(
             jobDescription,
             location,
-            experienceLevel,
-            diversityFlags
+            experienceLevel
           ),
         },
       ],

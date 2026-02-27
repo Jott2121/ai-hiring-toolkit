@@ -10,14 +10,13 @@ export const BOOLEAN_SYSTEM_PROMPT =
 export function buildBooleanUserPrompt(
   jobDescription: string,
   location?: string,
-  experienceLevel?: string,
-  diversityFlags?: string[]
+  experienceLevel?: string
 ): string {
   return `Generate Boolean search strings for sourcing candidates for this role.
 
 Job Description:
 ${jobDescription}
-${location ? `\nPreferred Location: ${location}` : ""}${experienceLevel ? `\nExperience Level: ${experienceLevel}` : ""}${diversityFlags?.length ? `\nDiversity sourcing focus: ${diversityFlags.join(", ")}` : ""}
+${location ? `\nPreferred Location: ${location}` : ""}${experienceLevel ? `\nExperience Level: ${experienceLevel}` : ""}
 
 Return a JSON object with exactly these fields:
 {
@@ -36,7 +35,6 @@ Return a JSON object with exactly these fields:
     "estimatedVolume": "low",
     "bestFor": "when to use this variant"
   },
-  "diversitySuggestions": ["3-4 actionable tips for inclusive sourcing, e.g. diverse professional organizations, HBCUs, women-in-tech communities"],
   "searchTips": ["3-4 tips for refining these searches on different platforms"]
 }
 

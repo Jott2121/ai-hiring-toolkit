@@ -18,7 +18,6 @@ interface BooleanResult {
   broad: BooleanVariant;
   targeted: BooleanVariant;
   narrow: BooleanVariant;
-  diversitySuggestions: string[];
   searchTips: string[];
 }
 
@@ -126,7 +125,6 @@ export default function SourcingAssistant() {
   const [boolJd, setBoolJd] = useState("");
   const [boolLocation, setBoolLocation] = useState("");
   const [boolExperience, setBoolExperience] = useState("");
-  const [boolDiversity, setBoolDiversity] = useState<string[]>([]);
   const [boolResult, setBoolResult] = useState<BooleanResult | null>(null);
   const [boolLoading, setBoolLoading] = useState(false);
   const [boolError, setBoolError] = useState<string | null>(null);
@@ -168,7 +166,6 @@ export default function SourcingAssistant() {
           jobDescription: boolJd,
           location: boolLocation || undefined,
           experienceLevel: boolExperience || undefined,
-          diversityFlags: boolDiversity.length ? boolDiversity : undefined,
         }),
       });
       const data = await res.json();
@@ -359,40 +356,6 @@ export default function SourcingAssistant() {
                 </div>
               </div>
 
-              <div className="mb-5">
-                <label className="block text-sm font-medium mb-1.5">
-                  Diversity Focus (optional)
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Women in Tech",
-                    "HBCU Alumni",
-                    "Veterans",
-                    "Neurodiversity",
-                    "LGBTQ+",
-                  ].map((flag) => (
-                    <button
-                      key={flag}
-                      type="button"
-                      onClick={() =>
-                        setBoolDiversity((prev) =>
-                          prev.includes(flag)
-                            ? prev.filter((f) => f !== flag)
-                            : [...prev, flag]
-                        )
-                      }
-                      className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                        boolDiversity.includes(flag)
-                          ? "bg-primary text-white"
-                          : "bg-gray-100 text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {flag}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <button
                 onClick={handleBooleanSubmit}
                 disabled={!boolJd || boolLoading}
@@ -475,50 +438,25 @@ export default function SourcingAssistant() {
                   </div>
                 </div>
 
-                {/* Diversity & Tips */}
-                {(boolResult.diversitySuggestions?.length > 0 ||
-                  boolResult.searchTips?.length > 0) && (
+                {/* Search Tips */}
+                {boolResult.searchTips?.length > 0 && (
                   <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                    {boolResult.diversitySuggestions?.length > 0 && (
-                      <div className="mb-4">
-                        <h4 className="font-medium text-foreground mb-2">
-                          Diversity Sourcing Tips
-                        </h4>
-                        <ul className="space-y-1">
-                          {boolResult.diversitySuggestions.map((tip, i) => (
-                            <li
-                              key={i}
-                              className="text-sm text-foreground/80 flex items-start gap-2"
-                            >
-                              <span className="text-primary mt-0.5 shrink-0">
-                                +
-                              </span>
-                              {tip}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {boolResult.searchTips?.length > 0 && (
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">
-                          Search Tips
-                        </h4>
-                        <ul className="space-y-1">
-                          {boolResult.searchTips.map((tip, i) => (
-                            <li
-                              key={i}
-                              className="text-sm text-foreground/80 flex items-start gap-2"
-                            >
-                              <span className="text-indigo-500 mt-0.5 shrink-0">
-                                &#8227;
-                              </span>
-                              {tip}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    <h4 className="font-medium text-foreground mb-2">
+                      Search Tips
+                    </h4>
+                    <ul className="space-y-1">
+                      {boolResult.searchTips.map((tip, i) => (
+                        <li
+                          key={i}
+                          className="text-sm text-foreground/80 flex items-start gap-2"
+                        >
+                          <span className="text-indigo-500 mt-0.5 shrink-0">
+                            &#8227;
+                          </span>
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>

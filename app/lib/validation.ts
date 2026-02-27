@@ -7,7 +7,6 @@ export const booleanSearchSchema = z.object({
   experienceLevel: z
     .enum(["entry", "mid", "senior", "executive"])
     .optional(),
-  diversityFlags: z.array(z.string()).optional(),
 });
 export type BooleanSearchInput = z.infer<typeof booleanSearchSchema>;
 

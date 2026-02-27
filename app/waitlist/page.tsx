@@ -69,7 +69,7 @@ export default function WaitlistPage() {
         </h1>
         <p className="text-muted-foreground">
           We&apos;ll notify you when Pro launches and lock in your early-access
-          price of $39/month.
+          price of $19/month (billed annually) or $29/month.
         </p>
       </div>
 
@@ -105,8 +105,8 @@ export default function WaitlistPage() {
             name="plan"
             className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
           >
-            <option value="pro">Pro ($39/mo)</option>
-            <option value="team">Team ($99/mo)</option>
+            <option value="pro-monthly">Pro — $29/month</option>
+            <option value="pro-annual">Pro — $19/month (billed annually)</option>
           </select>
         </div>
 
